@@ -5,8 +5,8 @@ const { router: authRouter, isAuthenticated } = require('../middleware/auth'); /
 
 // Dummy messages array
 const messages = [
-  { text: 'Hi there!', user: 'Amando', added: new Date(), avatar: '', id: 0, upvotes: 0 },
-  { text: 'Hello World!', user: 'Charles', added: new Date(), avatar: '', id: 1, upvotes: 0 }
+    { text: 'Hi there!', user: 'Amando', added: new Date(), avatar: '', id: 0, upvotes: 0, upvoters: [] },
+    { text: 'Hello World!', user: 'Charles', added: new Date(), avatar: '', id: 1, upvotes: 0, upvoters: [] }
 ];
 
 // Route to get all messages and render the homepage
@@ -26,7 +26,8 @@ router.post('/new', isAuthenticated, (req, res) => {
   const user = req.session.user;
 
   if (!messageText) {
-    return res.status(400).send('Message text is required.');
+    req.flash('error', 'Message text is required.');
+    return res.redirect('/new'); // Redirect back to the new message form
   }
 
   messages.push({
@@ -38,22 +39,41 @@ router.post('/new', isAuthenticated, (req, res) => {
     upvotes: 0
   });
 
+  req.flash('success', 'Your message has been posted successfully.');
   res.redirect('/'); // Redirect to homepage after message is added
 });
 
 // Route to view a specific message by ID
 router.get('/message/:id', (req, res) => {
-  const message = messages.find(m => m.id == req.params.id);
-  if (!message) return res.redirect('/'); // Redirect if message not found
-  const user = req.session.user || null;
-  res.render('message', { message, user, moment }); // Render the specific message
+    const message = messages.find(m => m.id == req.params.id);
+    if (!message) return res.redirect('/'); // Redirect if message not found
+  
+    const user = req.session.user || null;
+    res.render('message', { message, user, moment, messages: req.flash() }); // Pass flash messages here
 });
-
+  
 // Route to upvote a specific message
 router.post('/message/:id/upvote', (req, res) => {
   const message = messages.find(m => m.id == req.params.id);
-  if (message) message.upvotes++; // Increment the upvotes for the message
-  res.redirect('/'); // Redirect to homepage after upvote
+
+  if (!message) {
+    return res.status(404).send('Message not found');
+  }
+
+  const user = req.session.user;
+
+  // Check if the user has already upvoted this message
+  if (message.upvoters.includes(user.username)) {
+    req.flash('error', 'You can only upvote a message once.');
+    return res.redirect(`/message/${message.id}`);  // Redirect back to the message page
+  }
+
+  // Add user to the list of upvoters and increment the upvote count
+  message.upvoters.push(user.username);
+  message.upvotes++;
+
+  req.flash('success', 'You have upvoted the message.');
+  res.redirect('/'); // Redirect back to the homepage
 });
 
 // Route to delete a specific message (only allowed for the message owner or admin)
@@ -70,8 +90,10 @@ router.post('/message/:id/delete', isAuthenticated, (req, res) => {
     if (index !== -1) {
       messages.splice(index, 1); // Remove the message from the array
     }
+
+    req.flash('success', 'Message deleted successfully.');
   } else {
-    return res.status(403).send('You can only delete your own messages.'); // Prevent unauthorized deletion
+    req.flash('error', 'You can only delete your own messages or messages as an admin.');
   }
 
   res.redirect('/'); // Redirect to homepage after message deletion

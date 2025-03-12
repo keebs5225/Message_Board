@@ -9,6 +9,22 @@
 <body>
   <div class="container">
     <h1>Sign Up</h1>
+
+    <!-- Display flash messages if any -->
+    <% if (typeof messages !== 'undefined' && messages.length > 0) { %>
+      <% messages.forEach(function(message) { %>
+        <% if (message[0] === 'error') { %>
+          <div style="color: red;">
+            <%= message[1] %>
+          </div>
+        <% } else if (message[0] === 'success') { %>
+          <div style="color: green;">
+            <%= message[1] %>
+          </div>
+        <% } %>
+      <% }); %>
+    <% } %>
+
     <form action="/auth/signup" method="POST">
         <div>
           <label for="username">Username:</label>
@@ -24,7 +40,7 @@
         </div>
         <button type="submit">Sign Up</button>
     </form>     
-    <p>Already have an account? <a href="/auth/login">Login</a></p>
+    <p>Already have an account? <a href="/auth/login" class="button">Login</a></p>
   </div>
 </body>
 </html>

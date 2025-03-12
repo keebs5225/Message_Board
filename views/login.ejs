@@ -9,6 +9,19 @@
 <body>
   <div class="container">
     <h1>Login</h1>
+
+    <!-- Display flash error messages if any -->
+    <% if (messages && messages.error) { %>
+      <div style="color: red;">
+        <%= messages.error %>
+      </div>
+    <% } %>
+    <% if (messages && messages.success) { %>
+      <div style="color: green;">
+        <%= messages.success %>
+      </div>
+    <% } %>
+
     <form action="/auth/login" method="POST">
       <label for="username">Username</label>
       <input type="text" name="username" id="username" required>
@@ -18,7 +31,8 @@
 
       <button type="submit">Login</button>
     </form>
-    <p>Don't have an account? <a href="/auth/signup">Sign Up</a></p>
+
+    <p>Don't have an account? <a href="/auth/signup" class="button">Sign Up</a></p>
   </div>
 </body>
 </html>

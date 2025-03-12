@@ -6,27 +6,31 @@
 </head>
 <body>
   <div class="container">
-    <h1><%= title %></h1>
-    <% if (user) { %>
-      <p>Welcome, <%= user.username %>! (<a href="/auth/logout">Logout</a>)</p>
-      <a href="/profile">Your Profile</a>
-    <% } else { %>
-      <a href="/auth/login">Login</a>
-    <% } %>
+    <div class="header">
+      <h1><%= title %></h1>
+      <% if (user) { %>
+        <div class="header-buttons">
+          <a href="/profile">Your Profile</a>
+          <a href="/new">Add a new message</a>
+        </div>
+      <% } %>
+    </div>
+
     <ul>
       <% messages.forEach((message) => { %>
-        <li>
+        <li class="message-item">
           <% if (message.avatar) { %><img src="<%= message.avatar %>" alt="avatar" width="30"> <% } %>
           <strong><%= message.user %></strong>: <%= message.text %> <em>(<%= message.added.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) %>)</em>
-          <span>Upvotes: <%= message.upvotes %></span>
-          <a href="/message/<%= message.id %>">Open</a>
-          <form method="POST" action="/message/<%= message.id %>/upvote" style="display:inline;">
-            <button type="submit">Upvote</button>
-          </form>
+          <div class="message-actions">
+            <span>Upvotes: <%= message.upvotes %></span>
+            <form method="POST" action="/message/<%= message.id %>/upvote" style="display:inline;">
+              <button type="submit">Upvote</button>
+            </form>
+            <a href="/message/<%= message.id %>">Open</a>
+          </div>
         </li>
       <% }) %>
     </ul>
-    <% if (user) { %><a href="/new">Add a new message</a><% } %>
   </div>
 </body>
 </html>

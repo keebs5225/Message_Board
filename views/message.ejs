@@ -13,17 +13,28 @@
     <p><em>Posted <%= moment(message.added).fromNow() %></em></p>
     <p>Upvotes: <%= message.upvotes %></p>
 
+    <!-- Flash message for errors (e.g., not logged in or upvoted already) -->
+    <% if (messages && messages.error) { %>
+      <div style="color: red;">
+        <%= messages.error %>
+      </div>
+    <% } %>
+
+    <!-- If the user is the message owner or an admin, they can delete the message -->
     <% if (user && (user.username === message.user || user.role === 'admin')) { %>
       <form method="POST" action="/message/<%= message.id %>/delete">
         <button type="submit">Delete Message</button>
       </form>
     <% } %>
 
-    <form method="POST" action="/message/<%= message.id %>/upvote" style="display:inline;">
-      <button type="submit">Upvote</button>
-    </form>
+    <!-- Upvote button, only visible if user is logged in -->
+    <% if (user) { %>
+      <form method="POST" action="/message/<%= message.id %>/upvote" style="display:inline;">
+        <button type="submit">Upvote</button>
+      </form>
+    <% } %>
 
-    <a href="/">Back to Messages</a>
+    <a href="/" class="button">Back to messages</a>
   </div>
 </body>
 </html>

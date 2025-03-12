@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const flash = require('connect-flash');  // Import connect-flash
 const dotenv = require('dotenv');
 const app = express();
 
@@ -24,7 +25,9 @@ app.use(session({
   resave: false, 
   saveUninitialized: true 
 }));
+app.use(flash());  // Use connect-flash for flash messages
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static files
+
 
 // Routes
 app.use('/', indexRouter); // Use indexRouter for the homepage

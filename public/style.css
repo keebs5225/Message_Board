@@ -1,31 +1,158 @@
+/* General body styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-  }
-  .container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-  }
-  button, a {
-    background: #007bff;
-    color: #fff;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  button:hover, a:hover {
-    background: #0056b3;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+/* Container for centering content */
+.container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+}
+
+/* Header styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-buttons a {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.header-buttons a:hover {
+  background: #0056b3;
+}
+
+/* Button and form styles */
+button, a {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover, a:hover {
+  background: #0056b3;
+}
+
+/* Message list styles */
+.message-item {
+  margin-bottom: 20px;
+}
+
+/* Actions section inside message item */
+.message-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-actions form {
+  margin: 0;
+}
+
+.message-actions a {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.message-actions a:hover,
+.message-actions button:hover {
+  background: #0056b3;
+}
+
+/* Login form and input styles */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form label {
+  font-weight: bold;
+}
+
+form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  padding: 10px;
+  border-radius: 4px;
+  background: #007bff;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+
+form button:hover {
+  background: #0056b3;
+}
+
+/* Message page styling */
+.message-item {
+  margin-bottom: 20px;
+}
+
+/* Profile page */
+h2 {
+  font-size: 1.5em;
+  margin-top: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/* Error/success messages */
+div[style="color: red;"] {
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+div[style="color: green;"] {
+  background-color: #d4edda;
+  padding: 10px;
+  border-radius: 4px;
+}
