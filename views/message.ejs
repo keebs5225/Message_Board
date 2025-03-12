@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= message.user %>'s Message</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Message from <%= message.user %></h1>
+    <p><%= message.text %></p>
+    <p><em>Posted <%= moment(message.added).fromNow() %></em></p>
+    <p>Upvotes: <%= message.upvotes %></p>
+
+    <% if (user && (user.username === message.user || user.role === 'admin')) { %>
+      <form method="POST" action="/message/<%= message.id %>/delete">
+        <button type="submit">Delete Message</button>
+      </form>
+    <% } %>
+
+    <form method="POST" action="/message/<%= message.id %>/upvote" style="display:inline;">
+      <button type="submit">Upvote</button>
+    </form>
+
+    <a href="/">Back to Messages</a>
+  </div>
+</body>
+</html>
