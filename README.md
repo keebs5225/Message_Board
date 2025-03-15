@@ -76,4 +76,4 @@ In your GitHub repo, go to Settings > Pages.
 
 Under "Source," select the branch to deploy and save.
 
-Your site will be live at https://your-username.github.io/your-repo/.
+Your site will be live at https:keebs5225.github.io/Message_Board
